@@ -18,7 +18,7 @@ pipeline{
         }
         stage("Deploying"){
             steps{
-                sh 'docker run -d -p 8000:8000 jenkins-pipeln-image'
+                sh 'docker-compose down && docker-compose up -d'
             }
         }
     }
