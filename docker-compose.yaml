@@ -2,6 +2,6 @@ version: '3.9'
 
 services:
   web:
-    image: "Gitguru01/jenkins-pipeln-image:latest"
+    image: "gitguru01/jenkins-pipeln-image"
     ports:
       - "8000:8000"
