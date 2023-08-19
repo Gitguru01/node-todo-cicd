@@ -1,29 +1,24 @@
-pipeline {
+pipeline{
     agent any
-    
     stages{
         stage("Code"){
             steps{
-                git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
+                git url: 'https://github.com/Gitguru01/node-todo-cicd.git', branch: 'master'
             }
         }
-        stage("Build & Test"){
+        stage("Build"){
             steps{
-                sh "docker build . -t node-app-test-new"
+                sh 'docker build . -t jenkins-pipeln-image'
             }
         }
-        stage("Push to DockerHub"){
+        stage("Test"){
             steps{
-                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "docker tag node-app-test-new ${env.dockerHubUser}/node-app-test-new:latest"
-                    sh "docker push ${env.dockerHubUser}/node-app-test-new:latest" 
-                }
+                echo "Test the Code"
             }
         }
-        stage("Deploy"){
+        stage("Deploying"){
             steps{
-                sh "docker-compose down && docker-compose up -d"
+                sh 'docker run -d -p 8000:8000 jenkins-pipeln-image'
             }
         }
     }
